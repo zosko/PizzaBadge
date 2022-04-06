@@ -2,14 +2,15 @@
 #include <EEPROM.h>
 #include <ESP8266HTTPClient.h>
 
-const int pin_slice_1 = 5;   // D1
-const int pin_slice_2 = 4;   // D2
-const int pin_slice_3 = 0;   // D3
-const int pin_slice_4 = 2;   // D4
-const int pin_slice_5 = 14;  // D5
-const int pin_slice_6 = 12;  // D6
-const int pin_slice_7 = 13;  // D7
-const int pin_slice_8 = 15;  // D8
+const int pin_reset = A0;
+const int pin_slice_1 = D1;
+const int pin_slice_2 = D2;
+const int pin_slice_3 = D3;
+const int pin_slice_4 = D4;
+const int pin_slice_5 = D5;
+const int pin_slice_6 = D6;
+const int pin_slice_7 = D7;
+const int pin_slice_8 = D8;
 
 const int allPins[8] = { pin_slice_1, pin_slice_2, pin_slice_3, pin_slice_4,
                          pin_slice_5, pin_slice_6, pin_slice_7, pin_slice_8
@@ -39,6 +40,24 @@ void turnOn(int slice) {
 void turnOff(int slice) {
   digitalWrite(slice, LOW);
 }
+void turnOnAll() {
+  for (int i = 0; i < 7; i++) {
+    turnOn(allPins[i]);
+  }
+}
+void turnOffAll() {
+  for (int i = 0; i < 7; i++) {
+    turnOff(allPins[i]);
+  }
+}
+void animateReset() {
+  for (int i = 0; i < 50; i++) {
+    turnOnAll();
+    delay(100);
+    turnOffAll();
+    delay(100);
+  }
+}
 void writeCodeToEEPROM(const String &strToWrite) {
   byte len = strToWrite.length();
   EEPROM.write(0, len);
@@ -64,29 +83,22 @@ String readCodeFromEEPROM() {
 void checkForPizzaPoint() {
   WiFiClient client;
   HTTPClient http;
-  if (http.begin(client, "http://192.168.31.86:8080/check/" + webURLParam)) {  // HTTP
+  if (http.begin(client, "http://192.168.31.86:8080/check/" + webURLParam)) {
     int httpCode = http.GET();
     if (httpCode > 0) {
       if (httpCode == HTTP_CODE_OK) {
         String payload = http.getString();
+        Serial.print("Payload:");
         Serial.println(payload);
-
-        if (payload == "reset") {
-          wm.resetSettings();
-        } else {
+        if (payload.toInt() > 0 && payload.toInt() < 9) {
           turnOffAll();
-          turnOn(allPins[payload.toInt()]);
+          turnOn(allPins[payload.toInt() - 1]);
         }
       }
     } else {
       Serial.printf("[HTTP] failed, error: %s\n", http.errorToString(httpCode).c_str());
     }
     http.end();
-  }
-}
-void turnOffAll() {
-  for (int i = 0; i < 7; i++) {
-    turnOff(allPins[i]);
   }
 }
 void setup() {
@@ -96,8 +108,8 @@ void setup() {
 
   for (int i = 0; i < 7; i++) {
     pinMode(allPins[i], OUTPUT);
-    turnOff(allPins[i]);
   }
+  turnOffAll();
 
   const char* custom_server_str = "<br/><label for='customfieldid'>Enter Badge Code</label><input type='text' name='customfieldid' maxlength='5'>";
   new (&custom_field) WiFiManagerParameter(custom_server_str);
@@ -112,7 +124,6 @@ void setup() {
   }
   else {
     Serial.println("connected...yeey :)");
-
     if (shouldSaveConfig) {
       writeCodeToEEPROM(webURLParam);
       delay(100);
@@ -123,9 +134,28 @@ void setup() {
     Serial.print(webURLParam);
     Serial.println("]");
   }
+
+  pinMode(pin_reset, INPUT_PULLUP);
 }
 
 void loop() {
   checkForPizzaPoint();
   delay(5000);
+
+  if (analogRead(pin_reset) > 1000) {
+    Serial.println("RESET");
+    animateReset();
+    WiFi.mode(WIFI_STA);
+    delay(1000);
+    WiFi.disconnect();
+    delay(1000);
+    wm.resetSettings();
+    delay(1000);
+    ESP.eraseConfig();
+    delay(1000);
+    ESP.reset();
+    delay(1000);
+    ESP.restart();
+    delay(1000);
+  }
 }
