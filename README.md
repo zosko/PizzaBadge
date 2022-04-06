@@ -1,6 +1,6 @@
-# PizzaBadge
+# Pizza Badge
 
-8 Slices pizza badge
+8 Slices pizza badge presented with LEDs. Slices will light when they receive response from server how many points you have.
 
 ## Scheme
 ![Scheme](scheme.png)
