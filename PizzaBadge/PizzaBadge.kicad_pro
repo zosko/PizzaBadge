@@ -337,7 +337,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "SlicePointsBadge.kicad_pro",
+    "filename": "PizzaBadge.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -371,7 +371,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "PizzaBadge.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
