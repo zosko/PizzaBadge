@@ -10,7 +10,8 @@ void checkForPizzaPoint() {
         Serial.println(payload);
         if (payload.toInt() > 0 && payload.toInt() < 9) {
           turnOffAll();
-          turnOn(allPins[payload.toInt() - 1]);
+          animateRotation();
+          animateSlice(payload.toInt());
         }
       }
     } else {

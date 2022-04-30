@@ -26,7 +26,7 @@ void setup() {
   EEPROM.begin(512);
   WiFi.mode(WIFI_STA);
 
-  for (int i = 0; i < 7; i++) {
+  for (int i = 0; i < 8; i++) {
     pinMode(allPins[i], OUTPUT);
   }
   turnOffAll();
@@ -62,8 +62,7 @@ void loop() {
   checkForPizzaPoint();
   delay(5000);
 
-  if (analogRead(pin_reset) > 1000) {
-    Serial.println("RESET");
+  if (analogRead(pin_reset) < 1000) {
     animateReset();
     factoryReset();
   }
