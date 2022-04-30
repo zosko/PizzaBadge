@@ -31,7 +31,7 @@ Empty PCB|Finished PCB
 
 ## Demo
 
-![Video](https://user-images.githubusercontent.com/3172271/166099249-6f1bf737-73ee-47af-b424-5f22f5a7027d.mp4)
+<img src="https://user-images.githubusercontent.com/3172271/166099249-6f1bf737-73ee-47af-b424-5f22f5a7027d.mp4" width="400" height="400">
 
 ## Reasons to choose Seeed Studio
 - They provide PCB services at extremely low pricing and with excellent quality.
