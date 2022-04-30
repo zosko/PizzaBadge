@@ -27,7 +27,7 @@ https://www.seeedstudio.com/prototype-pcb-assembly.html
 ## Seeed Fusion PCBs
 Empty PCB|Finished PCB
 --------|--------
-![View 4](images/pcb-received.jpg)|![View 5](images/pcb-finish.jpg)
+![View 4](images/pcb-received.jpeg)|![View 5](images/pcb-finish.jpg)
 
 ## Reasons to choose Seeed Studio
 - They provide PCB services at extremely low pricing and with excellent quality.
