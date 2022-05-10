@@ -2,19 +2,40 @@ var express = require("express");
 var app = express();
 var http = require("http");
 var server = http.createServer(app);
+const path = require('path');
 
-var random = false;
+var responseValue = "0";
+var sliceToEat = false;
+
+function resetResponse() {
+  sliceToEat = false;
+  responseValue = "0";
+}
+
+app.get('/', function(req, res){
+  res.sendFile(path.join(__dirname, 'index.html'));
+})
+
+app.get('/return/:value', function(req, res){
+  responseValue = req.params.value;
+  res.send("ok");
+})
+
+app.get('/random', function(req, res){
+  sliceToEat = !sliceToEat;
+  res.send("ok");
+})
 
 app.get('/check/:code', function(req, res){
-  if (random) {
+  if (sliceToEat) {
     console.log("random");
     res.send("random");
   } else {
     var code = req.params.code;
-    var slice = JSON.stringify(Math.floor(Math.random() * 8));
-    console.log("[" + code + "] return: " + slice);
-    res.send(slice);
+    console.log("[" + code + "] return: " + responseValue);
+    res.send(responseValue);
   }
+  resetResponse();
 })
 
 server.listen(8080);
