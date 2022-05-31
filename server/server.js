@@ -26,14 +26,19 @@ app.get('/random', function(req, res){
   res.send("ok");
 })
 
-app.get('/check/:code', function(req, res){
+app.get('/check/:email', function(req, res){
   if (sliceToEat) {
     console.log("random");
-    res.send("random");
+    res.send("random-eat");
   } else {
-    var code = req.params.code;
-    console.log("[" + code + "] return: " + responseValue);
-    res.send(responseValue);
+    var email = req.params.email;
+    console.log("[" + email + "] return: " + responseValue);
+    if (responseValue == 8 ) {
+      res.send("free-pizza");
+    } else {
+      res.send(responseValue);
+    }
+    
   }
   resetResponse();
 })
