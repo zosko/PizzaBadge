@@ -31,10 +31,17 @@ void setup() {
   }
   turnOffAll();
 
-  const char* custom_server_str = "<br/><label for='customfieldid'>Enter Badge Code</label><input type='text' name='customfieldid' maxlength='5'>";
+  wm.setTitle("Pizza Badge");
+
+  const char* custom_server_str = "<br/><label for='customfieldid'>Enter Email</label><input type='text' name='customfieldid'>";
   new (&custom_field) WiFiManagerParameter(custom_server_str);
   wm.addParameter(&custom_field);
   wm.setSaveParamsCallback(saveParamCallback);
+
+  std::vector<const char *> wm_menu  = {"wifi"};
+  wm.setShowInfoUpdate(false);
+  wm.setShowInfoErase(false);
+  wm.setMenu(wm_menu);
 
   bool res;
   res = wm.autoConnect("PizzaBadgeAP");

@@ -8,10 +8,13 @@ void checkForPizzaPoint() {
         String payload = http.getString();
         Serial.print("Payload:");
         Serial.println(payload);
-        if (payload == "random") {
-          anumateProp();
-          int randomNum = random(1, 8);
-          randomSlice(randomNum);
+        if (payload == "random-eat") {
+          animateProp();
+        }
+        else if (payload == "free-pizza") {
+          freePizzaAnimate();
+          animateRotation();
+          animateSlice(8);
         }
         else if (payload.toInt() > 0 && payload.toInt() < 9) {
           turnOffAll();
