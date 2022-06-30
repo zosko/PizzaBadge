@@ -69,7 +69,9 @@ void loop() {
   checkForPizzaPoint();
   delay(5000);
 
-  if (analogRead(pin_reset) < 1000) {
+  // SMD version > 1000
+  // Normal version < 1000
+  if (analogRead(pin_reset) > 1000) { 
     animateReset();
     factoryReset();
   }
