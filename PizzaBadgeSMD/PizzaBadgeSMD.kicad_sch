@@ -5314,7 +5314,7 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "Switch" (id 1) (at 242.57 101.6 0))
-    (property "Footprint" "Button_Switch_SMD:SW_SPDT_CK-JS102011SAQN" (id 2) (at 242.57 106.68 0)
+    (property "Footprint" "Button_Switch_SMD:SW_SPDT_PCM12" (id 2) (at 242.57 106.68 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 242.57 106.68 0)
@@ -5914,7 +5914,7 @@
       (reference "SW1") (unit 1) (value "RESET") (footprint "Button_Switch_SMD:SW_SPST_CK_RS282G05A3")
     )
     (path "/f4cc036a-96d3-4325-b01d-b9d5c6a6df17"
-      (reference "SW2") (unit 1) (value "Switch") (footprint "Button_Switch_SMD:SW_SPDT_CK-JS102011SAQN")
+      (reference "SW2") (unit 1) (value "Switch") (footprint "Button_Switch_SMD:SW_SPDT_PCM12")
     )
     (path "/dc1328ae-788e-4e55-8090-8d0fa272fa94"
       (reference "U1") (unit 1) (value "ESP-12E") (footprint "RF_Module:ESP-12E")
